@@ -1,0 +1,219 @@
+[build-system]
+requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning"]
+build-backend = "poetry.core.masonry.api"
+
+[tool]
+
+[tool.poetry-dynamic-versioning]
+enable = true
+vcs = "git"
+format-jinja = """
+    {%- if distance == 0 -%}
+        {{ serialize_pep440(base) }}
+    {%- elif revision is not none -%}
+        {{ serialize_pep440(base, stage, revision + 1, dev=distance, metadata=[commit]) }}
+    {%- else -%}
+        {{ serialize_pep440(bump_version(base), stage, revision, dev=distance, metadata=[commit]) }}
+    {%- endif -%}
+"""
+
+[tool.poetry]
+name = "netbox"
+version = "0.0.0" # managed by poetry-dynamic-versioning
+description = "Infrastructure resource modeling for network automation. Open source under Apache 2. Public demo: https://demo.netbox.dev."
+license = "apache-2"
+keywords = ["automation", "netbox", "network"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Web Environment",
+    "Intended Audience :: Manufacturing",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3 :: Only",
+]
+authors = ["netbox-community"]
+readme = "README.md"
+documentation = "https://netbox.readthedocs.io/en/stable/"
+homepage = "https://netbox.dev/"
+repository = "https://github.com/netbox-community/netbox.git"
+
+[tool.poetry.scripts]
+netbox='netbox.manage:main'
+
+[tool.poetry.urls]
+issue = "https://github.com/netbox-community/netbox/issues"
+
+[tool.poetry.dependencies]
+python = ">=3.8 <3.10"
+
+# The Python web framework on which NetBox is built
+# https://github.com/django/django
+Django = "4.0.4"
+
+# Django middleware which permits cross-domain API requests
+# https://github.com/OttoYiu/django-cors-headers
+django-cors-headers = "3.11.0"
+
+# Runtime UI tool for debugging Django
+# https://github.com/jazzband/django-debug-toolbar
+django-debug-toolbar = "3.2.4"
+
+# Library for writing reusable URL query filters
+# https://github.com/carltongibson/django-filter
+django-filter = "21.1"
+
+# Django debug toolbar extension with support for GraphiQL
+# https://github.com/flavors/django-graphiql-debug-toolbar/
+django-graphiql-debug-toolbar = "0.2.0"
+
+# Modified Preorder Tree Traversal (recursive nesting of objects)
+# https://github.com/django-mptt/django-mptt
+django-mptt = "0.13.4"
+
+# Context managers for PostgreSQL advisory locks
+# https://github.com/Xof/django-pglocks
+django-pglocks = "1.0.4"
+
+# Prometheus metrics library for Django
+# https://github.com/korfuri/django-prometheus
+django-prometheus = "2.2.0"
+
+# Django chaching backend using Redis
+# https://github.com/jazzband/django-redis
+django-redis = "5.2.0"
+
+# Django integration for RQ (Reqis queuing)
+# https://github.com/rq/django-rq
+django-rq = "2.5.1"
+
+# Abstraction models for rendering and paginating HTML tables
+# https://github.com/jieter/django-tables2
+django-tables2 = "2.4.1"
+
+# User-defined tags for objects
+# https://github.com/alex/django-taggit
+django-taggit = "2.1.0"
+
+# A Django field for representing time zones
+# https://github.com/mfogel/django-timezone-field/
+django-timezone-field = "5.0"
+
+# A REST API framework for Django projects
+# https://github.com/encode/django-rest-framework
+djangorestframework = "3.13.1"
+
+# Swagger/OpenAPI schema generation for REST APIs
+# https://github.com/axnsan12/drf-yasg
+drf-yasg = {version = "1.20.0", extras = ["validation"]}
+
+# Django wrapper for Graphene (GraphQL support)
+# https://github.com/graphql-python/graphene-django
+graphene-django = "2.15.0"
+
+# WSGI HTTP server
+# https://gunicorn.org/
+gunicorn = "20.1.0"
+
+# Platform-agnostic template rendering engine
+# https://github.com/pallets/jinja
+# Pin to v3.0 for mkdocstrings
+Jinja2 = "3.0.3"
+
+# Simple markup language for rendering HTML
+# https://github.com/Python-Markdown/markdown
+Markdown = "3.3.6"
+
+# File inclusion plugin for Python-Markdown
+# https://github.com/cmacmackin/markdown-include
+markdown-include = "0.6.0"
+
+# MkDocs Material theme (for documentation build)
+# https://github.com/squidfunk/mkdocs-material
+mkdocs-material = "8.2.9"
+
+# Introspection for embedded code
+# https://github.com/mkdocstrings/mkdocstrings
+mkdocstrings = "0.17.0"
+
+# Library for manipulating IP prefixes and addresses
+# https://github.com/netaddr/netaddr
+netaddr = "0.8.0"
+
+# Fork of PIL (Python Imaging Library) for image processing
+# https://github.com/python-pillow/Pillow
+Pillow = "9.1.0"
+
+# PostgreSQL database adapter for Python
+# https://github.com/psycopg/psycopg2
+psycopg2-binary = "2.9.3"
+
+# YAML rendering library
+# https://github.com/yaml/pyyaml
+PyYAML = "6.0"
+
+# Social authentication framework
+# https://github.com/python-social-auth/social-core
+social-auth-app-django = "5.0.0"
+
+# Django app for social-auth-core
+# https://github.com/python-social-auth/social-app-django
+social-auth-core = "4.2.0"
+
+# SVG image rendering (used for rack elevations)
+# https://github.com/mozman/svgwrite
+svgwrite = "1.4.2"
+
+# Tabular dataset library (for table-based exports)
+# https://github.com/jazzband/tablib
+tablib = "3.2.1"
+
+# Timezone data (required by django-timezone-field on Python 3.9+)
+# https://github.com/python/tzdata
+tzdata = "2022.1"
+
+# Workaround for #7401
+jsonschema = "3.2.0"
+
+[tool.poetry.dev-dependencies]
+black = "^22.3.0"
+wheel = "^0.37.1"
+bandit = "^1.7.4"
+coverage = "^6.3.2"
+flake8 = "^4.0.1"
+flake8-bugbear = "^22.3.23"
+pex = "^2.1.82"
+pycodestyle = "^2.8.0"
+mkdocs = "^1.3.0"
+
+[tool.poetry-dynamic-versioning.substitution]
+files = ["netbox/_netbox_version.py"]
+
+[tool.black]
+line-length = 88
+target-version = ['py38']
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+  | artifacts
+)/
+'''
+
+[tool.coverage.report]
+omit = [
+  'netbox/__main__.py',
+  'netbox/_netbox_version.py',
+  'tests/*',
+  '*/site-packages/*'
+]

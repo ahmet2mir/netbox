@@ -26,3 +26,6 @@ netbox.pid
 .idea
 .coverage
 .vscode
+init_pipx
+init_pip
+dist
